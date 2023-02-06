@@ -1,0 +1,50 @@
+@import "./tailwind/_base.css";
+@import "./tailwind/_components.css";
+@import "./tailwind/_utilities.css";
+
+@import "./_checkbox-radio-switch.css";
+@import "./_progress.css";
+@import "./_scrollbars.css";
+@import "./_table.css";
+
+@font-face {
+    font-family: "Vercetti-Regular";
+    src: url("../fonts/Vercetti-Regular/Vercetti-Regular.ttf");
+    src: url("../fonts/Vercetti-Regular/OpenType WOFFs/Vercetti-Regular.woff") format("woff"),
+    url("../fonts/Vercetti-Regular/Vercetti-Regular.otf") format("opentype"),;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Vercetti-Regular';
+}
+
+.dark-background {
+	background:#242424 !important;
+}
+ 
+@media screen and (max-width: 624px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 523px) {
+    html {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 423px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 353px) {
+    html {
+        font-size: 9px;
+    }
+}
