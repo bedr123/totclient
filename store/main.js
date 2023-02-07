@@ -61,7 +61,7 @@ const actions = {
   },
   async login(state, data) {
     try {
-      const res = await axios.post("http://localhost:8000/api/login", data)
+      const res = await axios.post("/api/login", data)
       state.commit("SET_TOKEN", res.data.token)
       state.commit("SET_USER", res.data.user)
       return

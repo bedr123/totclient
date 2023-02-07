@@ -138,7 +138,7 @@ const checked = (isChecked, client) => {
           {{ picture.id }}
         </td>
         <td data-label="Picture">
-          <img class="w-28" :src="`http://localhost:8000/images/${ picture.image }`" alt="">
+          <img class="w-28" :src="picture.image" alt="">
         </td>
         <td data-label="Year">
           {{ picture.year }}

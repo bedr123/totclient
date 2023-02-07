@@ -14,7 +14,7 @@ export default {
   props: ['picture'],
   computed: {
     picturePath() {
-        return this.picture ? "http://localhost:8000/images/" + this.picture.image : ''
+        return this.picture ? this.picture.image : ''
     }
   },
   mounted() {
