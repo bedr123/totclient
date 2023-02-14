@@ -3,10 +3,16 @@
     <Head>
       <Title>{{ title }}</Title>
       <Meta name="description" :content="description"></Meta>
+      <Meta property="og:title" :content="title"></Meta>
+      <Meta property="og:description" :content="description"></Meta>
+      <Meta property="og:image" content="@/assets/images/tot.png"></Meta>
+      <Meta property="og:url" content="https://testoftimes.com"></Meta>
+      <Link rel="apple-touch-icon" url="@/assets/images/apple-touch-icon.png"></Link>
     </Head>
+    <ShareModal @closeShareModal="shareModal = false" v-if="shareModal" />
     <Header ref="navbar" @buyTheGame="buyTheGame = true" @howToPlay="howToPlay = true" />
     <PictureFrame ref="picture" :picture="picture" />
-    <GuessingPart ref="guessingPart" :picture="picture" @showError="showError" @hideError="hideError" />
+    <GuessingPart @shareModal="shareModal = true" ref="guessingPart" :picture="picture" @showError="showError" @hideError="hideError" />
     <Footer ref="footer" />
     <Error ref="errorDialog" :error="error" />
     <HowToPlay ref="howToPlay" v-show="howToPlay" @closeHowToPlay="howToPlay = false" />
@@ -25,6 +31,7 @@ export default {
       buyTheGame: false,
       isDarkMode: false,
       picture: null,
+      shareModal: false,
       title: 'Test Of Times',
       description: 'Test of Times is a fun online game where people can learn more about history through photos. A new photo is added daily where individuals attempt to guess the correct year the photo was taken.'
     }

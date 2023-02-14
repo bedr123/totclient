@@ -20,6 +20,7 @@
             {{ description }}
         </p>
         <a ref="link" target="_blank" :href="link">Learn More</a>
+        <button @click="share" class="share">Share Result <img src="@/assets/images/share-fill.svg" /></button>
     </div>
 </template>
 
@@ -51,6 +52,51 @@ export default {
             this.$refs.link.classList.remove("dark-mode")
         }
     },
+    share() {
+        let tries = this.$store.state.guess.currGuesses
+        let numOfPic = this.picture.num_of_pic
+        if (navigator.canShare()) {
+            let newline = "%0A"
+            let result = ''
+            for (let i = 0; i < tries; i++) {
+                let temp = localStorage.getItem('guess' + (i + 1))
+                for (let j = 0; j < 4; j++) {
+                    if (temp[j] == 't') {
+
+                        result = result + '🟩'
+                    } else {
+                        result = result + '🟥'
+                    }
+                }
+                result = result + newline
+            }
+            navigator.share({
+                title: 'Test Of Times',
+                text: `Test Of Times ${ numOfPic } ${ tries }/3 ${ newline }${ result }`,
+                url: 'https://testoftimes.com'
+            })
+        } else {
+            let newline = "\n"
+            let result = ''
+            for (let i = 0; i < tries; i++) {
+                let temp = localStorage.getItem('guess' + (i + 1))
+                for (let j = 0; j < 4; j++) {
+                    if (temp[j] == 't') {
+
+                        result = result + '🟩'
+                    } else {
+                        result = result + '🟥'
+                    }
+                }
+                result = result + newline
+            }
+            navigator.clipboard.writeText(`Test Of Times ${ numOfPic } ${ tries }/3 ${ newline }${ result } https://testoftimes.com`)
+            this.$emit("showError", "Copied to clipboard")
+            setTimeout(() => {
+              this.$emit("hideError")
+            }, 2000)
+        }
+    }
   }
 }
 </script>
@@ -97,7 +143,9 @@ a {
     font-size: .9rem;
     color: rgb(29, 52, 255);
     text-decoration: underline;
-    text-align: center;
+    text-align: left;
+    display: block;
+    margin-bottom: 5px;
 }
 
 a:hover {
@@ -127,6 +175,26 @@ a:hover {
 .i1, .i2, .i3, .i4 {
     margin-right: 4px;
 }
+
+.share {
+    /* display: flex; */
+    padding: 10px 0;
+    width: 100%;
+    font-size: 1rem;
+    color: white;
+    background-color: #013068;
+    transition: all 300ms ease-out;
+}
+
+.share img {
+    display: inline;
+    width: 1.3rem;
+}
+
+.share:hover {
+    background-color: #234875;
+}
+
 
 .green {
     background-color: #3BB143;

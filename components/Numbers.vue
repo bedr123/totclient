@@ -111,7 +111,7 @@ export default {
 }
 
 .number:hover, .enter-btn:hover, .erase-btn:hover {
-    background-color: #575757;
+    background-color: #234875;
 }
 
 .unvisible {

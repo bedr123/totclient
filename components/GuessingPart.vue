@@ -4,7 +4,7 @@
             <Game ref="game" />
             <Numbers ref="numbers" @guessYear="guessYear" />
         </div> 
-        <AboutPhoto :picture="picture" class="about-photo" ref="aboutPhoto" />
+        <AboutPhoto @showError="e => $emit('showError', e)" @hideError="$emit('hideError')" @shareModal="$emit('shareModal')" :picture="picture" class="about-photo" ref="aboutPhoto" />
     </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
       guessYear() {
         var currentDate = new Date();
         const currGuess = {...this.$store.state.guess.currGuess}
+        this.$store.commit('reset')
         const year = '' + this.$store.getters.picture.year;
         if (currGuess.isGuessed) {
           return
@@ -45,15 +46,19 @@ export default {
           return
         }
         this.$store.commit("addGuess")
+        localStorage.setItem('guess' + this.$store.state.guess.currGuesses, '')
         for (let i = 0; i < 4; i++) {
           setTimeout(() => {
             if (parseInt(year[i]) === parseInt(currGuess.num[i])) {
               this.$refs.game.changeColor(currGuess.row[0] + (i + 1), 0)
               this.$store.commit("setColor", { row: currGuess.row, icolor: 0 })
+              localStorage.setItem('guess' + this.$store.state.guess.currGuesses, localStorage.getItem('guess' + this.$store.state.guess.currGuesses) + 't')
+
             }
             else {
               this.$refs.game.changeColor(currGuess.row[0] + (i + 1), 1)
               this.$store.commit("setColor", { row: currGuess.row, icolor: 1 })
+              localStorage.setItem('guess' + this.$store.state.guess.currGuesses, localStorage.getItem('guess' + this.$store.state.guess.currGuesses) + 'f')
             }
           }, 600 * (i + 1))
         }

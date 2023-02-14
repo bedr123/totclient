@@ -88,6 +88,9 @@ const mutations = {
   },
   addGuess(state) {
     state.currGuesses++
+  },
+  reset(state) {
+    state.currGuess.num = ''
   }
 }
 

@@ -8,4 +8,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+    // modules: [
+    //   '@nuxtjs/google-analytics'
+    // ],
+    // googleAnalytics: {
+    //   // Options
+    // }
 });
