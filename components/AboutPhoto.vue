@@ -212,7 +212,7 @@ a:hover {
     opacity: 1;
 }
 
-.dark-mode {
+/* .dark-mode {
     color: white;
 }
 
@@ -221,5 +221,5 @@ a:hover {
 }
 .dark-mode a:hover {
     color: white
-}
+} */
 </style>

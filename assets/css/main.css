@@ -21,8 +21,8 @@
     font-family: 'Vercetti-Regular';
 }
 
-.dark-background {
-	background:#242424 !important;
+body {
+    min-height: 100vh;
 }
  
 @media screen and (max-width: 624px) {

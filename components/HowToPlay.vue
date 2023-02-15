@@ -72,7 +72,7 @@ export default {
     bottom: 0;
     width: 100%;
     height: 100vh;
-    background-color: rgba(89, 89, 89, 0.5);
+    background-color: rgba(49, 49, 49, 0.8);
 }
 
 .modal {
@@ -84,15 +84,16 @@ export default {
     height: 85vh;
     transform: translate(-50%, -50%);
     background-color: rgb(255, 255, 255);
-    padding: 40px;
+    padding: 2.5rem;
     overflow-y: auto;
-    box-shadow: 0px 0px 15px rgb(84, 84, 84);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .close {
     position: absolute;
-    top: 20px; 
-    right: 20px;
+    top: 1.25rem; 
+    right: 1.25rem;
+    width: 1.5rem;
     cursor: pointer;
     transition: all 200ms ease-out;
 }
@@ -130,11 +131,11 @@ export default {
 }
 
 .example-text {
-    width: 13.75rem;
+    width: 200px;
 }
 
 .example-text:last-child {
-    padding-top: 0.625rem;
+    /* padding-top: 0.625rem; */
 }
 
 .example-img {
@@ -143,6 +144,12 @@ export default {
 
 .example-img img {
     width: 100%;
+}
+
+@media screen and (max-width: 522px) {
+    .example-text {
+        width: 140px;
+    }
 }
 
 /* 
@@ -160,7 +167,7 @@ export default {
     color: rgb(94, 94, 255);
 } */
 
-.dark-mode.overlay {
+/* .dark-mode.overlay {
     background-color: rgba(255, 255, 255, 0.3);
 }
 
@@ -179,5 +186,5 @@ export default {
 
 .dark-mode .email-signup a:hover {
     color: rgb(83, 83, 255);
-}
+} */
 </style>
