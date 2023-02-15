@@ -56,7 +56,7 @@ export default {
         let tries = this.$store.state.guess.currGuesses
         let numOfPic = this.picture.num_of_pic
         if (navigator.share) {
-            let newline = "%0A"
+            let newline = "\n"
             let result = ''
             for (let i = 0; i < tries; i++) {
                 let temp = localStorage.getItem('guess' + (i + 1))
