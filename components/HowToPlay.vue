@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <p>A new photo is posted at 8am each day. Come back daily to learn more about history through photos and share your favorite photos with friends and family on Facebook and Twitter</p>
+                <p>A new photo is posted at 8am each day. Come back daily to learn more about history through photos and share your favorite photos with friends and family</p>
                 <p>Feedback or Inquiries? Email us at Info@Testoftimes.com</p>
             </div>
         </div>
