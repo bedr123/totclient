@@ -55,6 +55,9 @@ export default {
     share() {
         let tries = this.$store.state.guess.currGuesses
         let numOfPic = this.picture.num_of_pic
+        if (localStorage.getItem('guess' + tries) != 'tttt') {
+            tries = 'X'
+        }
         if (navigator.share) {
             let newline = "\n"
             let result = ''
@@ -72,7 +75,7 @@ export default {
             }
             navigator.share({
                 title: 'Test Of Times',
-                text: `Test Of Times ${ numOfPic } (${ tries }/3) ${ newline }${ result }`,
+                text: `Test Of Times #${ numOfPic } (${ tries }/3) ${ newline }${ result }`,
                 url: 'https://testoftimes.com'
             })
         } else {
@@ -90,7 +93,7 @@ export default {
                 }
                 result = result + newline
             }
-            navigator.clipboard.writeText(`Test Of Times ${ numOfPic } (${ tries }/3) ${ newline }${ result } https://testoftimes.com`)
+            navigator.clipboard.writeText(`Test Of Times #${ numOfPic } (${ tries }/3) ${ newline }${ result } https://testoftimes.com`)
             this.$emit("showError", "Copied to clipboard")
             setTimeout(() => {
               this.$emit("hideError")
