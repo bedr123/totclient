@@ -55,7 +55,7 @@ export default {
     share() {
         let tries = this.$store.state.guess.currGuesses
         let numOfPic = this.picture.num_of_pic
-        if (navigator.canShare()) {
+        if (navigator.share) {
             let newline = "%0A"
             let result = ''
             for (let i = 0; i < tries; i++) {
