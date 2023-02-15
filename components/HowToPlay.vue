@@ -36,9 +36,7 @@
                     </div>
                 </div>
                 <p>A new photo is posted at 8am each day. Come back daily to learn more about history through photos and share your favorite photos with friends and family.</p>
-                <p>Feedback or Inquiries?</p>
-                <p>Info@Testoftimes.com</p>
-                <p>978-846-2138</p>
+                <p>Feedback or Inquiries?<br>Info@Testoftimes.com<br>978-846-2138</p>
             </div>
         </div>
     </div>
