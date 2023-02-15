@@ -14,4 +14,10 @@ export default defineNuxtConfig({
     // googleAnalytics: {
     //   // Options
     // }
+    // runtimeConfig: {
+      // public: {
+      //     google_analytics_id: process.env.google_analytics_id,
+      //     production_mode: true
+      // }
+  // }
 });
