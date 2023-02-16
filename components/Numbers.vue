@@ -1,5 +1,6 @@
 <template>
     <div ref="numbers" class="container numbers-container">
+      <div class="browser">
         <div ref="enter" @click="$emit('guessYear')" class="enter-btn">
             <div>ENTER</div>
         </div>
@@ -8,6 +9,21 @@
         </div>
         <div ref="delete" class="erase-btn" @click="deleteNum">
             <img src="@/assets/images/delete-back-2-line.svg" alt="">
+        </div>
+
+      </div>
+        <div class="mobile-kb">
+          <div class="kb">
+            <div class="numbers">
+                <div class="number" v-for="number in numbers" :key="number" @click="type(number)" :ref="`num${ number }`">{{ number }}</div>
+            </div>
+            <div ref="delete" class="erase-btn" @click="deleteNum">
+                <img src="@/assets/images/delete-back-2-line.svg" alt="">
+            </div>
+          </div>
+          <div ref="enter" @click="$emit('guessYear')" class="enter-btn">
+            <div>ENTER</div>
+          </div>
         </div>
     </div>
 </template>
@@ -52,7 +68,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.container, .browser {
     width: 100%;
     max-width: fit-content;
     margin: 0 auto;
@@ -61,6 +77,9 @@ export default {
     color: #1A120B;
 }
 
+.mobile-kb {
+  display: none;
+}
 .numbers {
     display: flex;
 }
@@ -134,11 +153,26 @@ export default {
   .enter-btn {
     padding: 10px 10px;
     font-size: .75rem;
+    margin: 0;
+    margin-top: 1px;  
   }
 
   .erase-btn {
     padding: 10px 10px;
   }
+
+  .browser {
+    display: none;
+  }
+  .mobile-kb {
+    display: block;
+  }
+
+  .kb {
+    display: flex;
+  }
+
+
 }
 
 @media screen and (max-width: 395px) {
@@ -156,11 +190,11 @@ export default {
 }
 
 @media screen and (max-width: 323px) {
-  .container {
+  /* .container {
     flex-direction: column;
-  }
+  } */
 
-  .enter-btn {
+  /* .enter-btn {
     padding: 0;
     width: 40px;
     height: 25px;
@@ -174,6 +208,6 @@ export default {
     height: 25px;
     margin: 0 auto;
     margin-top: 1px;
-  }
+  } */
 }
 </style>
