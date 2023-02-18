@@ -4,10 +4,10 @@
       <Title>{{ title }}</Title>
       <Meta name="description" :content="description"></Meta>
       <Meta property="og:title" :content="title"></Meta>
-      <Meta property="og:description" :content="description"></Meta>
-      <Meta property="og:image" content="https://testoftimes.com/api/images/tot.png"></Meta>
+      <Meta hid="og-description" name="og:description" property="og:description" :content="description"></Meta>
+      <Meta hid="og-image" name="og:image" property="og:image" content="https://testoftimes.com/api/images/tot.png"></Meta>
       <Meta property="og:url" content="https://testoftimes.com"></Meta>
-      <Link rel="apple-touch-icon" url="https://testoftimes.com/api/images/apple-touch-icon.png"></Link>
+      <Link rel="apple-touch-icon" sizes="180x180" url="https://testoftimes.com/api/images/apple-touch-icon.png"></Link>
     </Head>
     <ShareModal @closeShareModal="shareModal = false" v-if="shareModal" />
     <Header ref="navbar" @buyTheGame="buyTheGame = true" @howToPlay="howToPlay = true" />
