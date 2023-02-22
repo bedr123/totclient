@@ -10,13 +10,14 @@
       <Link rel="apple-touch-icon" sizes="180x180" href="https://testoftimes.com/api/images/apple-touch-icon.png"></Link>
     </Head>
     <ShareModal @closeShareModal="shareModal = false" v-if="shareModal" />
-    <Header ref="navbar" @buyTheGame="buyTheGame = true" @howToPlay="howToPlay = true" />
+    <Header ref="navbar" @stats="stats = true" @howToPlay="howToPlay = true" />
     <PictureFrame ref="picture" :picture="picture" />
     <GuessingPart @shareModal="shareModal = true" ref="guessingPart" :picture="picture" @showError="showError" @hideError="hideError" />
     <Footer ref="footer" />
     <Error ref="errorDialog" :error="error" />
     <HowToPlay ref="howToPlay" v-show="howToPlay" @closeHowToPlay="howToPlay = false" />
     <BuyTheGame ref="buyTheGame" v-show="buyTheGame" @closeBuyTheGame="buyTheGame = false" />
+    <Stats ref="stats" v-show="stats" @closeStats="stats = false" />
   </div>
 </template>
 
@@ -26,6 +27,7 @@ export default {
   name: "IndexPage",
   data() {
     return {
+      stats: false,
       error: '',
       howToPlay: false,
       buyTheGame: false,
@@ -46,7 +48,7 @@ export default {
   //     }]
   //   }
   // },
-  created() {
+  mounted() {
     // this.$nuxt.$on("closeBuyTheGame", () => this.buyTheGame = false)
     // this.$nuxt.$on("closeHowToPlay", () => this.howToPlay = false)
     // this.$nuxt.$on("buyTheGame", () => this.buyTheGame = true)
@@ -57,6 +59,71 @@ export default {
     this.$store.dispatch('getActivePicture').then(() => {
       this.picture = this.$store.getters.picture
       console.log(this.picture)
+      if (!localStorage.getItem('testoftimes')) {
+        let game = {
+          game: {
+            id: this.picture.num_of_pic,
+            boardState: ['', '', ''],
+            currentRowIndex: 0,
+            status: 'IN_PROGRESS'
+          },
+          stats: {
+            averageGuesses: 0,
+            currentStreak: 0,
+            gamesPlayed: 0,
+            gamesWon: 0,
+            guesses: {
+              1: 0,
+              2: 0,
+              3: 0,
+              fail: 0
+            },
+            hasPlayed: false,
+            isOnStreak: false,
+            maxStreak: 0,
+            winPercentage: 0
+          }
+        }
+        this.$store.commit('updateStats', game.stats)
+        localStorage.setItem('testoftimes', JSON.stringify(game))
+      } else {
+        // let game = JSON.parse(localStorage.getItem('testoftimes'))
+        if (localStorage.getItem('testoftimes')) {
+          let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
+          if (this.picture.num_of_pic != tempOb.game.id) {
+            if ((tempOb.game.id + 1) != this.picture.num_of_pic) {
+              tempOb.stats.currentStreak = 0
+            }
+            tempOb.game.id = this.picture.num_of_pic
+            tempOb.game.boardState = ['', '', '']
+            tempOb.game.status = "IN_PROGRESS"
+            tempOb.game.currentRowIndex = 0
+          } else {
+            let year = '' + this.picture.year
+            if (tempOb.game.boardState[0].length == 4) {
+              for (let i = 0; i < 4; i++) {
+                this.$refs.guessingPart.$refs.game.changeColor('f' + (i + 1), tempOb.game.boardState[0][i] == year[i] ? 0 : 1)
+              }
+      
+              if (tempOb.game.boardState[1].length == 4) {
+                for (let i = 0; i < 4; i++) {
+                  this.$refs.guessingPart.$refs.game.changeColor('s' + (i + 1), tempOb.game.boardState[1][i] == year[i] ? 0 : 1)
+                }
+                
+                if (tempOb.game.boardState[2].length == 4) {
+                  for (let i = 0; i < 4; i++) {
+                    this.$refs.guessingPart.$refs.game.changeColor('t' + (i + 1), tempOb.game.boardState[2][i] == year[i] ? 0 : 1)
+                  }
+                }
+              }
+              // this.$store.commit('setRows', tempOb.game.boardState)
+            }
+          }
+          this.$store.commit('updateStats', tempOb.stats)
+    
+          localStorage.setItem('testoftimes', JSON.stringify(tempOb))
+        }
+      }
     })
   },
   methods: {

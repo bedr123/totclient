@@ -1,7 +1,7 @@
 <template>
     <div ref="navbarCon" class="header-container">
-        <a href="" @click.prevent="$emit('buyTheGame')" class="cart buythegame"><img src="@/assets/images/shopping-cart-line.svg" alt=""></a>
-        <a ref="text1" href="" @click.prevent="$emit('buyTheGame')" class="text-left link buythegame">Buy The Game</a>
+        <a href="" @click.prevent="$emit('stats')" class="cart buythegame"><img src="@/assets/images/bar-chart-2-line.svg" alt=""></a>
+        <a ref="text1" href="" @click.prevent="$emit('stats')" class="text-left link buythegame">Statistics</a>
         <div class="logo">
             <a ref="text2" href="/">
                 <img src="@/assets/images/TestOfTimesLogo.jpg" alt="">
@@ -105,10 +105,10 @@ export default {
     color: rgb(220, 219, 219) !important;
 }
 
-.buythegame {
+/* .buythegame {
     visibility: hidden;
     pointer-events: none;
-}
+} */
 
 @media screen and (max-width: 500px) {
     .nav {

@@ -75,6 +75,53 @@ export default {
                 }, 4 * 600 + 1000)
             }
         }
+        console.log(currGuess)
+        let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
+        if (currGuess.row == 'firstRow') {
+          tempOb.game.currentRowIndex = 0
+          tempOb.game.boardState[0] = currGuess.num
+        } else if (currGuess.row == 'secondRow') {
+          tempOb.game.currentRowIndex = 1
+          tempOb.game.boardState[1] = currGuess.num
+
+        } else {
+          tempOb.game.currentRowIndex = 2
+          tempOb.game.boardState[2] = currGuess.num
+
+        }
+
+        if (currGuess.num == year) {
+          tempOb.game.status = 'WON'
+          tempOb.stats.gamesPlayed++
+          tempOb.stats.gamesWon++
+          tempOb.stats.guesses[tempOb.game.currentRowIndex + 1]++
+          tempOb.stats.currentStreak++
+          tempOb.stats.hasPlayed = true
+          tempOb.stats.isOnStreak = true
+          tempOb.stats.maxStreak = tempOb.stats.currentStreak > tempOb.stats.maxStreak ? tempOb.stats.currentStreak : tempOb.stats.maxStreak
+          tempOb.stats.winPercentage = parseInt((tempOb.stats.gamesWon / tempOb.stats.gamesPlayed) * 100)
+          let sum = 0
+          let counter = 0
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < tempOb.stats.guesses[i]; j++) {
+              sum += i
+              counter++
+            }
+          }
+          tempOb.stats.averageGuesses = parseInt(sum / counter)
+
+        } else if (currGuess.num != year && tempOb.game.currentRowIndex == 2) {
+          tempOb.game.status = "LOST"
+          tempOb.stats.gamesPlayed++
+          tempOb.stats.guesses.fail++
+          tempOb.stats.currentStreak = 0
+          tempOb.stats.hasPlayed = true
+          tempOb.stats.isOnStreak = false
+          tempOb.stats.winPercentage = parseInt((tempOb.stats.gamesWon / tempOb.stats.gamesPlayed) * 100)
+        }
+        this.$store.commit('updateStats', tempOb.stats)
+
+        localStorage.setItem('testoftimes', JSON.stringify(tempOb))
       },
       endTheGame() {
         this.$refs.aboutPhoto.$refs.aboutPhoto.classList.add("visible")

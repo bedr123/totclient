@@ -70,20 +70,33 @@ export default {
     }
   },
   mounted () {
-    if (this.$store.state.guess.firstRow.coloredCols.length == 4) {
-      for (let i = 0; i < 4; i++) {
-        this.changeColor('f' + (i + 1), this.$store.state.guess.firstRow.coloredCols[i])
-      }
-      if (this.$store.state.guess.secondRow.coloredCols.length == 4) {
-        for (let i = 0; i < 4; i++) {
-          this.changeColor('s' + (i + 1), this.$store.state.guess.secondRow.coloredCols[i])
-        }
-        if (this.$store.state.guess.thirdRow.coloredCols.length == 4) {
-          for (let i = 0; i < 4; i++) {
-            this.changeColor('t' + (i + 1), this.$store.state.guess.thirdRow.coloredCols[i])
-          }
-        }
-      }
+    if (localStorage.getItem('testoftimes')) {
+      let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
+      this.$store.commit('setRows', tempOb.game.boardState)
+
+      // this.$store.dispatch('getActivePicture').then(() => {
+      // let year = '' + this.$store.getters.picture.year
+      // if (tempOb.game.boardState[0].length == 4) {
+      //   for (let i = 0; i < 4; i++) {
+      //     this.changeColor('f' + (i + 1), tempOb.game.boardState[0][0] == year[0] ? 1 : 0)
+      //   }
+
+      //   if (tempOb.game.boardState[1].length == 4) {
+      //     for (let i = 0; i < 4; i++) {
+      //       this.changeColor('s' + (i + 1), tempOb.game.boardState[1][i] == year[i] ? 1 : 0)
+      //     }
+          
+      //     if (tempOb.game.boardState[2].length == 4) {
+      //       for (let i = 0; i < 4; i++) {
+      //         this.changeColor('t' + (i + 1), tempOb.game.boardState[2][i] == year[i] ? 1 : 0)
+      //       }
+      //     }
+      //   }
+
+      //   localStorage.setItem('testoftimes', JSON.stringify(tempOb))
+      // }
+    // })
+
     }
     this.firstRow = this.$store.state.guess.firstRow
     this.secondRow = this.$store.state.guess.secondRow

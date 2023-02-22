@@ -19,6 +19,8 @@ export default {
     const currentStyle = 'white'
 
     this.$store.dispatch('setStyle', currentStyle)
+
+    
     
     // const currentStoredDarkMode = typeof localStorage !== 'undefined' && localStorage[darkModeKey] === '1'
     

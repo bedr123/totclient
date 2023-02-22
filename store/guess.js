@@ -19,7 +19,8 @@ const state = () => ({
     row: 'firstRow',
     isGuessed: false
   },
-  currGuesses: 0
+  currGuesses: 0,
+  stats: null
 })
 
 const getters = {
@@ -91,6 +92,29 @@ const mutations = {
   },
   reset(state) {
     state.currGuess.num = ''
+  },
+  setRows(state, board) {
+    if (board[0]) {
+      state.firstRow.num = board[0]
+      state.firstRow.isSubmited = true
+      state.currGuess.row = 'secondRow'
+      state.currGuesses = 1
+      if (board[1]) {
+        state.secondRow.num = board[1]
+        state.secondRow.isSubmited = true
+        state.currGuess.row = 'thirdRow'
+        state.currGuesses = 2
+        if (board[2]) {
+          state.thirdRow.num = board[2]
+          state.thirdRow.isSubmited = true
+          state.currGuess.isGuessed = true
+          state.currGuesses = 3
+        }
+      }
+    }
+  },
+  updateStats(state, stats) {
+    state.stats = stats
   }
 }
 
