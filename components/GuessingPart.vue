@@ -3,8 +3,9 @@
         <div ref="gn" class="gn-container">
             <Game ref="game" />
             <Numbers ref="numbers" @guessYear="guessYear" />
+            <GameInfo :picture="picture" />
         </div> 
-        <AboutPhoto @showError="e => $emit('showError', e)" @hideError="$emit('hideError')" @shareModal="$emit('shareModal')" :picture="picture" class="about-photo" ref="aboutPhoto" />
+        <AboutPhoto @showError="e => $emit('showError', e)" @hideError="$emit('hideError')" @shareModal="$emit('shareModal')" :picture="picture" ref="aboutPhoto" />
     </div>
 </template>
 
@@ -18,6 +19,7 @@ export default {
     },
     props: ['picture'],
     mounted() {
+
         // this.$nuxt.$on("guessYear", this.guessYear);
     },
     methods: {
@@ -25,7 +27,11 @@ export default {
         var currentDate = new Date();
         const currGuess = {...this.$store.state.guess.currGuess}
         this.$store.commit('reset')
+        let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
         const year = '' + this.$store.getters.picture.year;
+        if (tempOb.game.status != "IN_PROGRESS") {
+          return
+        }
         if (currGuess.isGuessed) {
           return
         }
@@ -76,7 +82,6 @@ export default {
             }
         }
         console.log(currGuess)
-        let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
         if (currGuess.row == 'firstRow') {
           tempOb.game.currentRowIndex = 0
           tempOb.game.boardState[0] = currGuess.num

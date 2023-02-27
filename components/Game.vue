@@ -71,8 +71,8 @@ export default {
   },
   mounted () {
     if (localStorage.getItem('testoftimes')) {
-      let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
-      this.$store.commit('setRows', tempOb.game.boardState)
+      // let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
+      // this.$store.commit('setRows', tempOb.game.boardState)
 
       // this.$store.dispatch('getActivePicture').then(() => {
       // let year = '' + this.$store.getters.picture.year

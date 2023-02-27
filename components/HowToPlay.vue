@@ -7,36 +7,47 @@
             </div>
             <div class="text">
                 <p>Guess the year of the photo in 3 attempts.</p>
-                <p>The tiles will change based on how close to the correct year your guess was.</p>
-                <p><b>Example</b></p>
+                <p>The colors of the tiles will change based on how close your guess was to the correct year.</p>
+                <p>Examples</p>
                 <div class="example">
                     <div class="example-box">
-                        <div class="example-text">
-                            <p>Correct Century Incorrect Decade & Year</p>
-                        </div>
                         <div class="example-img">
                             <img src="@/assets/images/tile1.jpeg" alt="">
                         </div>
+                        <div class="example-text">
+                            <p>Correct Century | Incorrect Decade & Year</p>
+                        </div>
                     </div>
                     <div class="example-box">
-                        <div class="example-text">
-                            <p>Correct Century & Decade Incorrect Year</p>
-                        </div>
                         <div class="example-img">
                             <img src="@/assets/images/tile2.jpeg" alt="">
                         </div>
+                        <div class="example-text">
+                            <p>Correct Century & Decade | Incorrect Year</p>
+                        </div>
                     </div>
                     <div class="example-box">
-                        <div class="example-text">
-                            <p>Puzzle Answer</p>
-                        </div>
                         <div class="example-img">
                             <img src="@/assets/images/tile3.jpeg" alt="">
+                        </div>
+                        <div class="example-text">
+                            <p>Correct Year & Puzzle Answer</p>
                         </div>
                     </div>
                 </div>
                 <p>A new photo is posted at 6am EST each day. Come back daily to learn more about history through photos and share your favorite photos with friends and family.</p>
-                <p>Feedback or Inquiries?<br>Marc Hopkins 978-846-2138</p>
+                <p>Feedback or Inquiries?<br>Call or Text 978-846-2138</p>
+                <div class="socials">
+                    <a href="https://www.instagram.com/test_of_times/" target="_blank" class="instagram">
+                        <img ref="instagram" src="@/assets/images/instagram-line.svg" alt="">
+                    </a>
+                    <a href="https://www.facebook.com/TestOfTimes1/" target="_blank" class="facebook">
+                        <img ref="facebook" src="@/assets/images/facebook-fill.svg" alt="">
+                    </a>
+                    <a href="https://twitter.com/Test_Of_Times" target="_blank" class="twitter">
+                        <img ref="twitter" src="@/assets/images/twitter-fill.svg" alt="">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -87,6 +98,7 @@ export default {
     padding: 2.5rem;
     overflow-y: auto;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: #013068 solid 4px;
 }
 
 .close {
@@ -110,9 +122,23 @@ export default {
     font-weight: bold;
 }
 
+.title h3 {
+    font-family: 'Tilt Warp', cursive;
+}
+
+ul {
+    list-style-type: disc;
+    margin-bottom: 20px;
+}
+
+ul li {
+    font-family: 'Tilt Warp', cursive;
+}
+
 .text p {
     margin-bottom: 20px;
     text-align: left;
+    font-family: 'Tilt Warp', cursive;
 }
 
 .text p:first-child {
@@ -120,18 +146,16 @@ export default {
 }
 
 .example {
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-bottom: 0.938rem;
 }
 
 .example-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
 }
 
 .example-text {
-    width: 200px;
+    margin-top: 10px;
+    /* width: 200px; */
 }
 
 .example-text:last-child {
@@ -146,9 +170,44 @@ export default {
     width: 100%;
 }
 
+.socials {
+    /* max-width: 125px; */
+    /* width: 95%; */
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    /* margin-bottom: 20px; */
+}
+
+.socials img {
+    max-width: none;
+    width: 1.75rem;
+    transition: all 300ms ease-out;
+}
+
+.facebook, .twitter {
+    margin-left: 1rem;
+}
+
+.socials img:hover {
+    margin-top: -10px;
+
+}
+
 @media screen and (max-width: 522px) {
     .example-text {
-        width: 140px;
+        /* width: 140px; */
+    }
+    img {
+        /* width: 26px; */
+    }
+    /* html {
+        font-size: 21px !important;
+    } */
+
+    .modal {
+        height: fit-content;
     }
 }
 

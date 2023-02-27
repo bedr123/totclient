@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
 @import "./tailwind/_base.css";
 @import "./tailwind/_components.css";
 @import "./tailwind/_utilities.css";
@@ -13,6 +14,7 @@
     src: url("../fonts/Vercetti-Regular/OpenType WOFFs/Vercetti-Regular.woff") format("woff"),
     url("../fonts/Vercetti-Regular/Vercetti-Regular.otf") format("opentype"),;
 }
+
 
 * {
     padding: 0;
@@ -37,7 +39,7 @@ body {
     }
 }
 
-@media screen and (max-width: 423px) {
+/* @media screen and (max-width: 423px) {
     html {
         font-size: 10px;
     }
@@ -47,4 +49,4 @@ body {
     html {
         font-size: 9px;
     }
-}
+} */

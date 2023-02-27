@@ -94,17 +94,17 @@ const mutations = {
     state.currGuess.num = ''
   },
   setRows(state, board) {
-    if (board[0]) {
+    if (board[0].length == 4) {
       state.firstRow.num = board[0]
       state.firstRow.isSubmited = true
       state.currGuess.row = 'secondRow'
       state.currGuesses = 1
-      if (board[1]) {
+      if (board[1].length == 4) {
         state.secondRow.num = board[1]
         state.secondRow.isSubmited = true
         state.currGuess.row = 'thirdRow'
         state.currGuesses = 2
-        if (board[2]) {
+        if (board[2].length == 4) {
           state.thirdRow.num = board[2]
           state.thirdRow.isSubmited = true
           state.currGuess.isGuessed = true

@@ -16,11 +16,14 @@
                 {{ year[3] }}
             </div>
         </div>
-        <p>
+        <p class="description">
             {{ description }}
         </p>
         <a ref="link" target="_blank" :href="link">Learn More</a>
         <button @click="share" class="share">Share Result <img src="@/assets/images/share-fill.svg" /></button>
+        <div class="about-bottom">
+            <p>Come back tomorrow for a new TOT!</p>
+        </div>
     </div>
 </template>
 
@@ -130,7 +133,7 @@ h1 {
 
 p {
     font-size: 1rem;
-    text-align: left;
+    text-align:justify;
     margin-top: 10px;
     margin-bottom: 5px;
 }
@@ -163,6 +166,9 @@ a:hover {
     margin-bottom: 10px;
 }
 
+.about-bottom p {
+    font-family: 'Tilt Warp', cursive;
+}
 .input {
     width: 50px;
     height: 50px;
@@ -186,6 +192,7 @@ a:hover {
     width: 100%;
     font-size: 1rem;
     color: white;
+    font-family: 'Tilt Warp', cursive;
     background-color: #013068;
     transition: all 300ms ease-out;
 }
@@ -197,6 +204,14 @@ a:hover {
 
 .share:hover {
     background-color: #234875;
+}
+
+.about-bottom {
+    margin-bottom: 10px;
+}
+
+.about-bottom p {
+    text-align: center;
 }
 
 

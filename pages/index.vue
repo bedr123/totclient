@@ -13,7 +13,7 @@
     <Header ref="navbar" @stats="stats = true" @howToPlay="howToPlay = true" />
     <PictureFrame ref="picture" :picture="picture" />
     <GuessingPart @shareModal="shareModal = true" ref="guessingPart" :picture="picture" @showError="showError" @hideError="hideError" />
-    <Footer ref="footer" />
+    <!-- <Footer ref="footer" /> -->
     <Error ref="errorDialog" :error="error" />
     <HowToPlay ref="howToPlay" v-show="howToPlay" @closeHowToPlay="howToPlay = false" />
     <BuyTheGame ref="buyTheGame" v-show="buyTheGame" @closeBuyTheGame="buyTheGame = false" />
@@ -48,14 +48,13 @@ export default {
   //     }]
   //   }
   // },
-  mounted() {
+  created() {
     // this.$nuxt.$on("closeBuyTheGame", () => this.buyTheGame = false)
     // this.$nuxt.$on("closeHowToPlay", () => this.howToPlay = false)
     // this.$nuxt.$on("buyTheGame", () => this.buyTheGame = true)
     // this.$nuxt.$on("howToPlay", () => this.howToPlay = true)
     // this.$nuxt.$on("toggleMode", this.toggleMode)
     // this.isDarkMode = this.$store.getters.interface.isDarkMode
-    
     this.$store.dispatch('getActivePicture').then(() => {
       this.picture = this.$store.getters.picture
       console.log(this.picture)
@@ -100,23 +99,29 @@ export default {
             tempOb.game.currentRowIndex = 0
           } else {
             let year = '' + this.picture.year
-            if (tempOb.game.boardState[0].length == 4) {
-              for (let i = 0; i < 4; i++) {
-                this.$refs.guessingPart.$refs.game.changeColor('f' + (i + 1), tempOb.game.boardState[0][i] == year[i] ? 0 : 1)
-              }
-      
-              if (tempOb.game.boardState[1].length == 4) {
+            this.$store.commit('setRows', tempOb.game.boardState)
+
+            setTimeout(() => {
+              if (tempOb.game.boardState[0].length == 4) {
                 for (let i = 0; i < 4; i++) {
-                  this.$refs.guessingPart.$refs.game.changeColor('s' + (i + 1), tempOb.game.boardState[1][i] == year[i] ? 0 : 1)
+                  this.$refs.guessingPart.$refs.game.changeColor('f' + (i + 1), tempOb.game.boardState[0][i] == year[i] ? 0 : 1)
                 }
-                
-                if (tempOb.game.boardState[2].length == 4) {
+        
+                if (tempOb.game.boardState[1].length == 4) {
                   for (let i = 0; i < 4; i++) {
-                    this.$refs.guessingPart.$refs.game.changeColor('t' + (i + 1), tempOb.game.boardState[2][i] == year[i] ? 0 : 1)
+                    this.$refs.guessingPart.$refs.game.changeColor('s' + (i + 1), tempOb.game.boardState[1][i] == year[i] ? 0 : 1)
+                  }
+                  
+                  if (tempOb.game.boardState[2].length == 4) {
+                    for (let i = 0; i < 4; i++) {
+                      this.$refs.guessingPart.$refs.game.changeColor('t' + (i + 1), tempOb.game.boardState[2][i] == year[i] ? 0 : 1)
+                    }
                   }
                 }
               }
-              // this.$store.commit('setRows', tempOb.game.boardState)
+            }, 500)
+            if (tempOb.game.status != "IN_PROGRESS") {
+              this.$store.commit("guessed")
             }
           }
           this.$store.commit('updateStats', tempOb.stats)

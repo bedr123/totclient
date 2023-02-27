@@ -1,7 +1,7 @@
 <template>
     <div ref="navbarCon" class="header-container">
         <a href="" @click.prevent="$emit('stats')" class="cart buythegame"><img src="@/assets/images/bar-chart-2-line.svg" alt=""></a>
-        <a ref="text1" href="" @click.prevent="$emit('stats')" class="text-left link buythegame">Statistics</a>
+        <a ref="text1" href="" @click.prevent="$emit('stats')" class="text-left link buythegame">My Stats</a>
         <div class="logo">
             <a ref="text2" href="/">
                 <img src="@/assets/images/TestOfTimesLogo.jpg" alt="">
@@ -76,7 +76,8 @@ export default {
     font-size: 1rem;
     color: #1A120B;
     text-decoration: none;
-    font-weight: bold;
+    /* font-weight: bold; */
+    font-family: 'Tilt Warp', cursive;
 }
 
 .link:hover {

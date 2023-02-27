@@ -108,6 +108,7 @@ export default {
     padding: 3.5rem;
     overflow-y: auto;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: #013068 solid 4px;
 }
 
 .close {
