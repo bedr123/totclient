@@ -55,7 +55,9 @@ export default {
 }
 
 .number {
-    padding: 10px 10px;
+    /* padding: 10px 10px; */
+    width: 35px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -83,7 +85,8 @@ export default {
 }
 
 .erase-btn {
-    padding: 10px 10px;
+    width: 35px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -109,7 +112,8 @@ export default {
 
 @media screen and (max-width: 624px) {
   .number {
-    padding: 10px 10px;
+    width: 30px;
+    height: 45px;
   }
   .enter-btn {
     padding: 10px 10px;
@@ -117,7 +121,8 @@ export default {
   }
 
   .erase-btn {
-    padding: 10px 10px;
+    width: 30px;
+    height: 45px;
   }
 
 }

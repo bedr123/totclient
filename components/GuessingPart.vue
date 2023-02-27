@@ -5,7 +5,7 @@
             <Numbers ref="numbers" @guessYear="guessYear" />
             <GameInfo :picture="picture" />
         </div> 
-        <AboutPhoto @showError="e => $emit('showError', e)" @hideError="$emit('hideError')" @shareModal="$emit('shareModal')" :picture="picture" ref="aboutPhoto" />
+        <AboutPhoto @showError="e => $emit('showError', e)" @hideError="$emit('hideError')" @shareModal="$emit('shareModal')" :picture="picture" class="about-photo" ref="aboutPhoto" />
     </div>
 </template>
 
@@ -130,6 +130,7 @@ export default {
       },
       endTheGame() {
         this.$refs.aboutPhoto.$refs.aboutPhoto.classList.add("visible")
+        this.$refs.aboutPhoto.$refs.desc.classList.remove("d-none")
         this.$refs.gn.classList.add("unvisible")
       },
       setMode(isDark) {

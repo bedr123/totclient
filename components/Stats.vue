@@ -102,7 +102,7 @@ export default {
     left: 50%;
     width: 90%;
     max-width: 500px;
-    height: 85vh;
+    height: fit-content;
     transform: translate(-50%, -50%);
     background-color: rgb(255, 255, 255);
     padding: 3.5rem;

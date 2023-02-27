@@ -16,7 +16,7 @@
                 {{ year[3] }}
             </div>
         </div>
-        <p class="description">
+        <p ref="desc" class="description d-none">
             {{ description }}
         </p>
         <a ref="link" target="_blank" :href="link">Learn More</a>
@@ -214,6 +214,9 @@ a:hover {
     text-align: center;
 }
 
+.d-none {
+    display: none;
+}
 
 .green {
     background-color: #3BB143;
