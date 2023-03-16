@@ -19,19 +19,19 @@
                 <div class="text">
                     <div class="upper-stats">
                         <div class="stats">
-                            <h3>{{ (isAuthenticated) ? authStats.overall_played : stats ? stats.overall.gamesPlayed : 0 }}</h3>
+                            <h3>{{ (isAuthenticated) ? authStats.overall_played : stats ? stats.gamesPlayed : 0 }}</h3>
                             <p>Played</p>
                         </div>
                         <div class="stats">
-                            <h3>{{ (isAuthenticated) ? authStats.overall_win_percentage : stats ? stats.overall.winPercentage : 0 }}</h3>
+                            <h3>{{ (isAuthenticated) ? authStats.overall_win_percentage : stats ? stats.winPercentage : 0 }}</h3>
                             <p>Win %</p>
                         </div>
                         <div class="stats">
-                            <h3>{{ (isAuthenticated) ? authStats.overall_current_streak : stats ? stats.overall.currentStreak : 0 }}</h3>
+                            <h3>{{ (isAuthenticated) ? authStats.overall_current_streak : stats ? stats.currentStreak : 0 }}</h3>
                             <p>Current Streak</p>
                         </div>
                         <div class="stats">
-                            <h3>{{ (isAuthenticated) ? authStats.overall_max_streak : stats ? stats.overall.maxStreak : 0 }}</h3>
+                            <h3>{{ (isAuthenticated) ? authStats.overall_max_streak : stats ? stats.maxStreak : 0 }}</h3>
                             <p>Max Streak</p>
                         </div>
                     </div>
@@ -197,10 +197,10 @@ export default {
         return this.$store.getters.leaderboard
     },
     wonThreeInARow() {
-        return (this.isAuthenticated) ? this.authStats.overall_current_streak > 2 ? true : false : this.stats ? this.stats.overall.currentStreak > 2 ? true : false : false
+        return (this.isAuthenticated) ? this.authStats.overall_current_streak > 2 ? true : false : this.stats ? this.stats.currentStreak > 2 ? true : false : false
     },
     lostFiveInARow() {
-        return (this.isAuthenticated) ? this.authStats.overall_lost_in_a_row > 4 ? true : false : this.stats ? this.stats.overall.lostInARow > 4 ? true : false : false
+        return (this.isAuthenticated) ? this.authStats.overall_lost_in_a_row > 4 ? true : false : this.stats ? this.stats.lostInARow > 4 ? true : false : false
     },
     topFive() {
         return this.$store.getters.leaderboard ? this.user ? this.$store.getters.leaderboard.some(user =>  user.id == this.$store.getters.user.id ) : false : false
@@ -209,7 +209,7 @@ export default {
         return this.$store.getters.user
     },
     playedWholeLastMonth() {
-        return this.user ? this.user.statistics.overall_played_last_month : this.stats ? this.stats.overall_played_last_month : false
+        return this.user ? this.user.statistics.overall_played_last_month : this.stats ? this.stats.played_last_month : false
     }
   },
   mounted() {
@@ -331,24 +331,6 @@ export default {
         this.$store.dispatch('userLogout').then(() => {
             let game = JSON.parse(localStorage.getItem('testoftimes'))
             let stats = {
-                overall: {
-                  averageGuesses: 0,
-                  currentStreak: 0,
-                  lostInARow: 0,
-                  gamesPlayed: 0,
-                  gamesWon: 0,
-                  guesses: {
-                    1: 0,
-                    2: 0,
-                    3: 0,
-                    fail: 0
-                  },
-                  hasPlayed: false,
-                  isOnStreak: false,
-                  maxStreak: 0,
-                  winPercentage: 0
-                },
-                monthly: {
                   averageGuesses: 0,
                   currentStreak: 0,
                   lostInARow: 0,
@@ -365,7 +347,7 @@ export default {
                   maxStreak: 0,
                   winPercentage: 0
                 }
-              }
+              
               game.stats = stats
             this.$store.commit('updateStats', game.stats)
             localStorage.setItem('testoftimes', JSON.stringify(game))

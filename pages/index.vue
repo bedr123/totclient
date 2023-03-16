@@ -65,7 +65,6 @@ export default {
             status: 'IN_PROGRESS'
           },
           stats: {
-            overall: {
               averageGuesses: 0,
               currentStreak: 0,
               lostInARow: 0,
@@ -83,24 +82,6 @@ export default {
               winPercentage: 0,
               playedThisMonth: false,
               playedLastMonth: false
-            },
-            monthly: {
-              averageGuesses: 0,
-              currentStreak: 0,
-              lostInARow: 0,
-              gamesPlayed: 0,
-              gamesWon: 0,
-              guesses: {
-                1: 0,
-                2: 0,
-                3: 0,
-                fail: 0
-              },
-              hasPlayed: false,
-              isOnStreak: false,
-              maxStreak: 0,
-              winPercentage: 0
-            }
           }
         }
         this.$store.commit('updateStats', game.stats)
@@ -111,8 +92,8 @@ export default {
           let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
           if (this.picture.num_of_pic != tempOb.game.id) {
             if ((tempOb.game.id + 1) != this.picture.num_of_pic) {
-              tempOb.stats.overall.currentStreak = 0
-              tempOb.stats.overall.playedThisMonth = false
+              tempOb.statscurrentStreak = 0
+              tempOb.stats.playedThisMonth = false
             }
             tempOb.game.id = this.picture.num_of_pic
             tempOb.game.boardState = ['', '', '']
@@ -121,9 +102,9 @@ export default {
             var currentDate = new Date();
 
             if (currentDate.getDate() == 1) {
-              if (tempOb.stats.overall.playedThisMonth) {
-                tempOb.stats.overall.playedThisMonth = false
-                tempOb.stats.overall.playedLastMonth = true
+              if (tempOb.stats.playedThisMonth) {
+                tempOb.stats.playedThisMonth = false
+                tempOb.stats.playedLastMonth = true
               }
               // tempOb.stats.monthly = {
               //   averageGuesses: 0,
@@ -176,14 +157,14 @@ export default {
           }
           if (Cookie.get('user')) {
             let tempUser = JSON.parse(Cookie.get('user'))
-            tempOb.stats.overall.averageGuesses = tempUser.statistics.overall_average_guesses
-            tempOb.stats.overall.gamesWon = tempUser.statistics.overall_games_won
-            tempOb.stats.overall.gamesPlayed = tempUser.statistics.overall_played
-            tempOb.stats.overall.currentStreak = tempUser.statistics.overall_current_streak
-            tempOb.stats.overall.lostInARow = tempUser.statistics.overall_lost_in_a_row
-            tempOb.stats.overall.maxStreak = tempUser.statistics.overall_max_streak
-            tempOb.stats.overall.winPercentage = tempUser.statistics.overall_win_percentage
-            tempOb.stats.overall.guesses = tempUser.statistics.overall_guess_ditribution
+            tempOb.stats.averageGuesses = tempUser.statistics.overall_average_guesses
+            tempOb.stats.gamesWon = tempUser.statistics.overall_games_won
+            tempOb.stats.gamesPlayed = tempUser.statistics.overall_played
+            tempOb.stats.currentStreak = tempUser.statistics.overall_current_streak
+            tempOb.stats.lostInARow = tempUser.statistics.overall_lost_in_a_row
+            tempOb.stats.maxStreak = tempUser.statistics.overall_max_streak
+            tempOb.stats.winPercentage = tempUser.statistics.overall_win_percentage
+            tempOb.stats.guesses = tempUser.statistics.overall_guess_ditribution
             
             tempOb.stats.monthly.averageGuesses = tempUser.statistics.monthly_average_guesses
             tempOb.stats.monthly.gamesWon = tempUser.statistics.monthly_games_won
