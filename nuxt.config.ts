@@ -15,7 +15,7 @@ export default defineNuxtConfig({
           src: 'https://accounts.google.com/gsi/client',
         },
         {
-          src: "fb-sdk.js"
+          src: "https://testoftimes.com/fb-sdk.js"
         }
       ],
     }
