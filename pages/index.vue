@@ -18,10 +18,12 @@
     <HowToPlay ref="howToPlay" v-show="howToPlay" @closeHowToPlay="howToPlay = false" />
     <BuyTheGame ref="buyTheGame" v-show="buyTheGame" @closeBuyTheGame="buyTheGame = false" />
     <Stats ref="stats" v-show="stats" @closeStats="stats = false" />
+    <div id="fb-root"></div>
   </div>
 </template>
 
 <script>
+import Cookie from 'js-cookie'
 
 export default {
   name: "IndexPage",
@@ -49,15 +51,11 @@ export default {
   //   }
   // },
   created() {
-    // this.$nuxt.$on("closeBuyTheGame", () => this.buyTheGame = false)
-    // this.$nuxt.$on("closeHowToPlay", () => this.howToPlay = false)
-    // this.$nuxt.$on("buyTheGame", () => this.buyTheGame = true)
-    // this.$nuxt.$on("howToPlay", () => this.howToPlay = true)
-    // this.$nuxt.$on("toggleMode", this.toggleMode)
-    // this.isDarkMode = this.$store.getters.interface.isDarkMode
+    if (Cookie.get('token')) {
+      this.$store.dispatch('getMe')
+    }
     this.$store.dispatch('getActivePicture').then(() => {
       this.picture = this.$store.getters.picture
-      console.log(this.picture)
       if (!localStorage.getItem('testoftimes')) {
         let game = {
           game: {
@@ -67,20 +65,42 @@ export default {
             status: 'IN_PROGRESS'
           },
           stats: {
-            averageGuesses: 0,
-            currentStreak: 0,
-            gamesPlayed: 0,
-            gamesWon: 0,
-            guesses: {
-              1: 0,
-              2: 0,
-              3: 0,
-              fail: 0
+            overall: {
+              averageGuesses: 0,
+              currentStreak: 0,
+              lostInARow: 0,
+              gamesPlayed: 0,
+              gamesWon: 0,
+              guesses: {
+                1: 0,
+                2: 0,
+                3: 0,
+                fail: 0
+              },
+              hasPlayed: false,
+              isOnStreak: false,
+              maxStreak: 0,
+              winPercentage: 0,
+              playedThisMonth: false,
+              playedLastMonth: false
             },
-            hasPlayed: false,
-            isOnStreak: false,
-            maxStreak: 0,
-            winPercentage: 0
+            monthly: {
+              averageGuesses: 0,
+              currentStreak: 0,
+              lostInARow: 0,
+              gamesPlayed: 0,
+              gamesWon: 0,
+              guesses: {
+                1: 0,
+                2: 0,
+                3: 0,
+                fail: 0
+              },
+              hasPlayed: false,
+              isOnStreak: false,
+              maxStreak: 0,
+              winPercentage: 0
+            }
           }
         }
         this.$store.commit('updateStats', game.stats)
@@ -91,12 +111,41 @@ export default {
           let tempOb = JSON.parse(localStorage.getItem('testoftimes'))
           if (this.picture.num_of_pic != tempOb.game.id) {
             if ((tempOb.game.id + 1) != this.picture.num_of_pic) {
-              tempOb.stats.currentStreak = 0
+              tempOb.stats.overall.currentStreak = 0
+              tempOb.stats.overall.playedThisMonth = false
             }
             tempOb.game.id = this.picture.num_of_pic
             tempOb.game.boardState = ['', '', '']
             tempOb.game.status = "IN_PROGRESS"
             tempOb.game.currentRowIndex = 0
+            var currentDate = new Date();
+
+            if (currentDate.getDate() == 1) {
+              if (tempOb.stats.overall.playedThisMonth) {
+                tempOb.stats.overall.playedThisMonth = false
+                tempOb.stats.overall.playedLastMonth = true
+              }
+              // tempOb.stats.monthly = {
+              //   averageGuesses: 0,
+              //   currentStreak: 10,
+              //   lostInARow: 0,
+              //   gamesPlayed: 0,
+              //   gamesWon: 0,
+              //   guesses: {
+              //     1: 0,
+              //     2: 0,
+              //     3: 0,
+              //     fail: 0
+              //   },
+              //   hasPlayed: false,
+              //   isOnStreak: false,
+              //   maxStreak: 0,
+              //   winPercentage: 0
+              // }
+              // if (Cookie.get('user')) {
+              //   this.$store.dispatch('resetMonthlyStats')
+              // }
+            }
           } else {
             let year = '' + this.picture.year
             this.$store.commit('setRows', tempOb.game.boardState)
@@ -120,9 +169,30 @@ export default {
                 }
               }
             }, 500)
+
             if (tempOb.game.status != "IN_PROGRESS") {
               this.$store.commit("guessed")
             }
+          }
+          if (Cookie.get('user')) {
+            let tempUser = JSON.parse(Cookie.get('user'))
+            tempOb.stats.overall.averageGuesses = tempUser.statistics.overall_average_guesses
+            tempOb.stats.overall.gamesWon = tempUser.statistics.overall_games_won
+            tempOb.stats.overall.gamesPlayed = tempUser.statistics.overall_played
+            tempOb.stats.overall.currentStreak = tempUser.statistics.overall_current_streak
+            tempOb.stats.overall.lostInARow = tempUser.statistics.overall_lost_in_a_row
+            tempOb.stats.overall.maxStreak = tempUser.statistics.overall_max_streak
+            tempOb.stats.overall.winPercentage = tempUser.statistics.overall_win_percentage
+            tempOb.stats.overall.guesses = tempUser.statistics.overall_guess_ditribution
+            
+            tempOb.stats.monthly.averageGuesses = tempUser.statistics.monthly_average_guesses
+            tempOb.stats.monthly.gamesWon = tempUser.statistics.monthly_games_won
+            tempOb.stats.monthly.gamesPlayed = tempUser.statistics.monthly_played
+            tempOb.stats.monthly.currentStreak = tempUser.statistics.monthly_current_streak
+            tempOb.stats.monthly.lostInARow = tempUser.statistics.monthly_lost_in_a_row
+            tempOb.stats.monthly.maxStreak = tempUser.statistics.monthly_max_streak
+            tempOb.stats.monthly.winPercentage = tempUser.statistics.monthly_win_percentage
+            tempOb.stats.monthly.guesses = tempUser.statistics.monthly_guess_ditribution
           }
           this.$store.commit('updateStats', tempOb.stats)
     

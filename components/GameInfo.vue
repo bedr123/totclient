@@ -1,8 +1,7 @@
 <template>
     <div class="container">
         <div class="game-info">
-            <p>{{ date }}</p>
-            <p>TOT #{{ num }}</p>
+            <p>{{ date }} | TOT #{{ num }}</p>
         </div>
     </div>
 </template>

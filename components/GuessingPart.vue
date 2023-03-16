@@ -97,34 +97,72 @@ export default {
 
         if (currGuess.num == year) {
           tempOb.game.status = 'WON'
-          tempOb.stats.gamesPlayed++
-          tempOb.stats.gamesWon++
-          tempOb.stats.guesses[tempOb.game.currentRowIndex + 1]++
-          tempOb.stats.currentStreak++
-          tempOb.stats.hasPlayed = true
-          tempOb.stats.isOnStreak = true
-          tempOb.stats.maxStreak = tempOb.stats.currentStreak > tempOb.stats.maxStreak ? tempOb.stats.currentStreak : tempOb.stats.maxStreak
-          tempOb.stats.winPercentage = parseInt((tempOb.stats.gamesWon / tempOb.stats.gamesPlayed) * 100)
+          tempOb.stats.overall.gamesPlayed++
+          tempOb.stats.overall.gamesWon++
+          tempOb.stats.overall.guesses[tempOb.game.currentRowIndex + 1]++
+          tempOb.stats.overall.currentStreak++
+          tempOb.stats.overall.lostInARow = 0
+          tempOb.stats.overall.hasPlayed = true
+          tempOb.stats.overall.isOnStreak = true
+          tempOb.stats.overall.maxStreak = tempOb.stats.overall.currentStreak > tempOb.stats.overall.maxStreak ? tempOb.stats.overall.currentStreak : tempOb.stats.overall.maxStreak
+          tempOb.stats.overall.winPercentage = parseInt((tempOb.stats.overall.gamesWon / tempOb.stats.overall.gamesPlayed) * 100)
           let sum = 0
           let counter = 0
           for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < tempOb.stats.guesses[i]; j++) {
+            for (let j = 0; j < tempOb.stats.overall.guesses[i]; j++) {
               sum += i
               counter++
             }
           }
-          tempOb.stats.averageGuesses = parseInt(sum / counter)
+          tempOb.stats.overall.averageGuesses = parseInt(sum / counter)
+
+          tempOb.stats.monthly.gamesPlayed++
+          tempOb.stats.monthly.gamesWon++
+          tempOb.stats.monthly.guesses[tempOb.game.currentRowIndex + 1]++
+          tempOb.stats.monthly.currentStreak++
+          tempOb.stats.monthly.lostInARow = 0
+          tempOb.stats.monthly.hasPlayed = true
+          tempOb.stats.monthly.isOnStreak = true
+          tempOb.stats.monthly.maxStreak = tempOb.stats.monthly.currentStreak > tempOb.stats.monthly.maxStreak ? tempOb.stats.monthly.currentStreak : tempOb.stats.monthly.maxStreak
+          tempOb.stats.monthly.winPercentage = parseInt((tempOb.stats.monthly.gamesWon / tempOb.stats.monthly.gamesPlayed) * 100)
+          let sum2 = 0
+          let counter2 = 0
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < tempOb.stats.monthly.guesses[i]; j++) {
+              sum2 += i
+              counter2++
+            }
+          }
+          tempOb.stats.monthly.averageGuesses = parseInt(sum / counter)
 
         } else if (currGuess.num != year && tempOb.game.currentRowIndex == 2) {
           tempOb.game.status = "LOST"
-          tempOb.stats.gamesPlayed++
-          tempOb.stats.guesses.fail++
-          tempOb.stats.currentStreak = 0
-          tempOb.stats.hasPlayed = true
-          tempOb.stats.isOnStreak = false
-          tempOb.stats.winPercentage = parseInt((tempOb.stats.gamesWon / tempOb.stats.gamesPlayed) * 100)
+          tempOb.stats.overall.gamesPlayed++
+          tempOb.stats.overall.guesses.fail++
+          tempOb.stats.overall.currentStreak = 0
+          tempOb.stats.overall.lostInARow++
+          tempOb.stats.overall.hasPlayed = true
+          tempOb.stats.overall.isOnStreak = false
+          tempOb.stats.overall.winPercentage = parseInt((tempOb.stats.overall.gamesWon / tempOb.stats.overall.gamesPlayed) * 100)
+
+          tempOb.stats.monthly.gamesPlayed++
+          tempOb.stats.monthly.guesses.fail++
+          tempOb.stats.monthly.currentStreak = 0
+          tempOb.stats.monthly.lostInARow++
+          tempOb.stats.monthly.hasPlayed = true
+          tempOb.stats.monthly.isOnStreak = false
+          tempOb.stats.monthly.winPercentage = parseInt((tempOb.stats.monthly.gamesWon / tempOb.stats.monthly.gamesPlayed) * 100)
         }
+
+        
+        var currentDate = new Date();
+
+        if (currentDate.getDate() == 1) {
+          tempOb.stats.overall.playedThisMonth = true
+        }
+
         this.$store.commit('updateStats', tempOb.stats)
+        this.$store.dispatch('updateStatistics', tempOb.stats)
 
         localStorage.setItem('testoftimes', JSON.stringify(tempOb))
       },

@@ -92,7 +92,8 @@ export default {
     left: 50%;
     width: 90%;
     max-width: 500px;
-    height: 85vh;
+    height: fit-content;
+    max-height: 85vh;
     transform: translate(-50%, -50%);
     background-color: rgb(255, 255, 255);
     padding: 2.5rem;
@@ -207,7 +208,7 @@ ul li {
     } */
 
     .modal {
-        height: fit-content;
+        /* height: fit-content; */
     }
 }
 

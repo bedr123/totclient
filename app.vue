@@ -7,8 +7,7 @@
 </template>
 
 <script>
-// import { store } from '@/plugins/vuex.js'
-// import { darkModeKey, styleKey } from '@/config.js'
+import Cookie from 'js-cookie'
 
 export default {
   data() {
@@ -20,7 +19,13 @@ export default {
 
     this.$store.dispatch('setStyle', currentStyle)
 
-    
+    if (Cookie.get('token')) {
+      this.$store.commit("SET_TOKEN", Cookie.get('token'))
+    }
+    if (Cookie.get("user")) {
+      this.$store.commit("SET_USER", JSON.parse(Cookie.get("user")))
+      console.log(this.$store.getters.user)
+    }
     
     // const currentStoredDarkMode = typeof localStorage !== 'undefined' && localStorage[darkModeKey] === '1'
     

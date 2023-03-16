@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookie from 'js-cookie'
 
 const state = () => ({
     /* User */
@@ -7,6 +8,7 @@ const state = () => ({
     userAvatar: null,
     token: null,
     user: null,
+    leaderboard: null,
 
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
@@ -29,10 +31,20 @@ const state = () => ({
 const mutations = {
   SET_TOKEN(state, data) {
     state.token = data
-    localStorage.setItem('token', data)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', data)
+    }
+    Cookie.set('token', data)
   },
   SET_USER(state, data) {
     state.user = data
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(data))
+    }
+    Cookie.set('user', JSON.stringify(data))
+  },
+  SET_LEADERBOARD(state, data) {
+    state.leaderboard = data
   }
 }
 const actions = {
@@ -61,7 +73,7 @@ const actions = {
   },
   async login(state, data) {
     try {
-      const res = await axios.post("/api/login", data)
+      const res = await axios.post("http://localhost:8000/api/login", data)
       state.commit("SET_TOKEN", res.data.token)
       state.commit("SET_USER", res.data.user)
       return
@@ -72,12 +84,90 @@ const actions = {
   logout(state) {
     state.commit("SET_TOKEN", null)
     state.commit("SET_USER", null)
+  },
+  googleLogin(state, data) {
+    axios.post('http://localhost:8000/api/google-login/'+ data.token, data.stats).then((r) => {
+      state.commit("SET_TOKEN", r.data.token)
+      state.commit("SET_USER", r.data.user)
+      console.log(r.data.user)
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
+  },
+  facebookLogin(state, data) {
+    axios.post('http://localhost:8000/api/facebook-login/'+ data.token, data.stats).then((r) => {
+      state.commit("SET_TOKEN", r.data.token)
+      state.commit("SET_USER", r.data.user)
+      console.log(r.data.user)
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
+  },
+  getMe(state) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
+    axios.get("http://localhost:8000/api/me").then((r) => {
+      state.commit("SET_USER", r.data.user);
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
+  },
+  updateStatistics(state, data) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
+    axios.put("http://localhost:8000/api/statistics/update", data).then((res) => {
+      state.commit("SET_USER", res.data.user);
+      // console.log(res.data.user)
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
+  },
+  async userLogout(state) {
+    try {
+      console.log(Cookie.get("token"))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
+      const res = await axios.post("http://localhost:8000/api/logout")
+      state.commit("SET_TOKEN", null)
+      state.commit("SET_USER", null)
+      return
+    } catch(e) {
+      console.log(e)
+    }
+  },
+  resetMonthlyStats(state) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
+    axios.get("http://localhost:8000/api/statistics/monthly/reset").then((res) => {
+      state.commit("SET_USER", res.data.user);
+      // console.log(res.data.user)
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
+  },
+  getLeaderboard(state) {
+    axios.get("http://localhost:8000/api/leaderboard").then((res) => {
+      state.commit("SET_LEADERBOARD", res.data.data);
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
   }
 }
 
 const getters = {
   isAuthenticated(state) {
     return state.token ? true : false
+  },
+  isAdmin(state) {
+    return state.user ? state.user.role == "ADMIN" ? true : false : false
+  },
+  user(state) {
+    return state.user ? state.user : null
+  },
+  leaderboard(state) {
+    return state.leaderboard ? state.leaderboard : null
   }
 }
 

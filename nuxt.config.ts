@@ -8,9 +8,18 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-    // modules: [
-    //   '@nuxtjs/google-analytics'
-    // ],
+  app: {
+    head: {
+      script: [
+        {
+          src: 'https://accounts.google.com/gsi/client',
+        },
+        {
+          src: "fb-sdk.js"
+        }
+      ],
+    }
+  }
     // googleAnalytics: {
     //   // Options
     // }
