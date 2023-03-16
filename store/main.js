@@ -73,7 +73,7 @@ const actions = {
   },
   async login(state, data) {
     try {
-      const res = await axios.post("http://localhost:8000/api/login", data)
+      const res = await axios.post("/api/login", data)
       state.commit("SET_TOKEN", res.data.token)
       state.commit("SET_USER", res.data.user)
       return
@@ -86,7 +86,7 @@ const actions = {
     state.commit("SET_USER", null)
   },
   googleLogin(state, data) {
-    axios.post('http://localhost:8000/api/google-login/'+ data.token, data.stats).then((r) => {
+    axios.post('/api/google-login/'+ data.token, data.stats).then((r) => {
       state.commit("SET_TOKEN", r.data.token)
       state.commit("SET_USER", r.data.user)
       console.log(r.data.user)
@@ -96,7 +96,7 @@ const actions = {
     })
   },
   facebookLogin(state, data) {
-    axios.post('http://localhost:8000/api/facebook-login/'+ data.token, data.stats).then((r) => {
+    axios.post('/api/facebook-login/'+ data.token, data.stats).then((r) => {
       state.commit("SET_TOKEN", r.data.token)
       state.commit("SET_USER", r.data.user)
       console.log(r.data.user)
@@ -107,7 +107,7 @@ const actions = {
   },
   getMe(state) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
-    axios.get("http://localhost:8000/api/me").then((r) => {
+    axios.get("/api/me").then((r) => {
       state.commit("SET_USER", r.data.user);
       return
     }).catch((e) => {
@@ -116,7 +116,7 @@ const actions = {
   },
   updateStatistics(state, data) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
-    axios.put("http://localhost:8000/api/statistics/update", data).then((res) => {
+    axios.put("/api/statistics/update", data).then((res) => {
       state.commit("SET_USER", res.data.user);
       // console.log(res.data.user)
       return
@@ -128,7 +128,7 @@ const actions = {
     try {
       console.log(Cookie.get("token"))
       axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
-      const res = await axios.post("http://localhost:8000/api/logout")
+      const res = await axios.post("/api/logout")
       state.commit("SET_TOKEN", null)
       state.commit("SET_USER", null)
       return
@@ -138,7 +138,7 @@ const actions = {
   },
   resetMonthlyStats(state) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
-    axios.get("http://localhost:8000/api/statistics/monthly/reset").then((res) => {
+    axios.get("/api/statistics/monthly/reset").then((res) => {
       state.commit("SET_USER", res.data.user);
       // console.log(res.data.user)
       return
@@ -147,7 +147,7 @@ const actions = {
     })
   },
   getLeaderboard(state) {
-    axios.get("http://localhost:8000/api/leaderboard").then((res) => {
+    axios.get("/api/leaderboard").then((res) => {
       state.commit("SET_LEADERBOARD", res.data.data);
       return
     }).catch((e) => {
