@@ -56,7 +56,7 @@
                 <!-- <button @click="shareOverallStats" class="share">Share Overall Stats <img src="@/assets/images/share-fill.svg" /></button> -->
             </div>
             <div class="leaderboard">
-                <h3>Monthly Leaderboard</h3>
+                <h3>Leaderboard</h3>
                 <!-- <div class="monthly-leaderboard">
                     <div class="places">
                         <div>1st</div>
@@ -277,7 +277,7 @@ export default {
     shareLeaderboard() {
         let newline = "\n"
         let text = null
-        text = `Leaderboard ${ newline }1st ${ this.leaderboard[0].name } ${ this.user ? this.leaderboard[0].id == this.user.id ? '(me)' : '' : '' }${ newline }2nd ${ this.leaderboard[1].name } ${ this.user ? this.leaderboard[1].id == this.user.id ? '(me)' : '' : '' }${ newline }3rd ${ this.leaderboard[2].name } ${ this.user ? this.leaderboard[2].id == this.user.id ? '(me)' : '' : '' }${ newline }4th ${ this.leaderboard[3].name } ${ this.user ? this.leaderboard[3].id == this.user.id ? '(me)' : '' : '' }${ newline }5th ${ this.leaderboard[4].name } ${ this.user ? this.leaderboard[4].id == this.user.id ? '(me)' : '' : '' }${ newline }`
+        text = `Leaderboard ${ newline }1st ${ this.leaderboard[0].name } ${ this.user ? this.leaderboard[0].id == this.user.id ? '(me)' : '' : '' }${ newline }2nd ${ this.leaderboard[1].name } ${ this.user ? this.leaderboard[1].id == this.user.id ? '(me)' : '' : '' }${ newline }3rd ${ this.leaderboard[2].name } ${ this.user ? this.leaderboard[2].id == this.user.id ? '(me)' : '' : '' }${ newline }4th ${ this.leaderboard[3].name } ${ this.user ? this.leaderboard[3].id == this.user.id ? '(me)' : '' : '' }${ newline }5th ${ this.leaderboard[4].name } ${ this.user ? this.leaderboard[4].id == this.user.id ? '(me)' : '' : '' }${ newline }#testoftimes`
         if (navigator.share) {
             navigator.share({
                 title: 'Test Of Times',
@@ -306,7 +306,7 @@ export default {
             crownString += crowns[i] + ' '
         }
 
-        text = `My Crowns ${ newline }${ crownString }`
+        text = `My Crowns ${ newline }${ crownString }${ newline }#testoftimes`
         if (navigator.share) {
             navigator.share({
                 title: 'Test Of Times',

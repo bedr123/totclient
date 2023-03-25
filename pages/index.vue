@@ -165,15 +165,6 @@ export default {
             tempOb.stats.maxStreak = tempUser.statistics.overall_max_streak
             tempOb.stats.winPercentage = tempUser.statistics.overall_win_percentage
             tempOb.stats.guesses = tempUser.statistics.overall_guess_ditribution
-            
-            tempOb.stats.monthly.averageGuesses = tempUser.statistics.monthly_average_guesses
-            tempOb.stats.monthly.gamesWon = tempUser.statistics.monthly_games_won
-            tempOb.stats.monthly.gamesPlayed = tempUser.statistics.monthly_played
-            tempOb.stats.monthly.currentStreak = tempUser.statistics.monthly_current_streak
-            tempOb.stats.monthly.lostInARow = tempUser.statistics.monthly_lost_in_a_row
-            tempOb.stats.monthly.maxStreak = tempUser.statistics.monthly_max_streak
-            tempOb.stats.monthly.winPercentage = tempUser.statistics.monthly_win_percentage
-            tempOb.stats.monthly.guesses = tempUser.statistics.monthly_guess_ditribution
           }
           this.$store.commit('updateStats', tempOb.stats)
     

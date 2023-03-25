@@ -19,11 +19,11 @@ export default {
 
     this.$store.dispatch('setStyle', currentStyle)
 
-    if (Cookie.get('token')) {
-      this.$store.commit("SET_TOKEN", Cookie.get('token'))
+    if (localStorage.getItem('token')) {
+      this.$store.commit("SET_TOKEN", localStorage.getItem('token'))
     }
-    if (Cookie.get("user")) {
-      this.$store.commit("SET_USER", JSON.parse(Cookie.get("user")))
+    if (localStorage.getItem("user")) {
+      this.$store.commit("SET_USER", JSON.parse(localStorage.getItem("user")))
       console.log(this.$store.getters.user)
     }
     

@@ -79,7 +79,7 @@ export default {
             }
             navigator.share({
                 title: 'Test Of Times',
-                text: `Test Of Times #${ numOfPic } (${ stats }/3) ${ newline }${ result }`,
+                text: `Test Of Times #${ numOfPic } (${ stats }/3) ${ newline }${ result }${ newline }#testoftimes`,
                 url: 'https://testoftimes.com'
             })
         } else {
@@ -97,7 +97,7 @@ export default {
                 }
                 result = result + newline
             }
-            navigator.clipboard.writeText(`Test Of Times #${ numOfPic } (${ stats }/3) ${ newline }${ result } https://testoftimes.com`)
+            navigator.clipboard.writeText(`Test Of Times #${ numOfPic } (${ stats }/3) ${ newline }${ result } https://testoftimes.com${ newline }#testoftimes`)
             this.$emit("showError", "Copied to clipboard")
             setTimeout(() => {
               this.$emit("hideError")

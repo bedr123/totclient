@@ -97,6 +97,7 @@ export default {
 
         if (currGuess.num == year) {
           tempOb.game.status = 'WON'
+          console.log(tempOb.stats)
           tempOb.stats.gamesPlayed++
           tempOb.stats.gamesWon++
           tempOb.stats.guesses[tempOb.game.currentRowIndex + 1]++
@@ -115,26 +116,6 @@ export default {
             }
           }
           tempOb.stats.averageGuesses = parseInt(sum / counter)
-
-          tempOb.stats.monthly.gamesPlayed++
-          tempOb.stats.monthly.gamesWon++
-          tempOb.stats.monthly.guesses[tempOb.game.currentRowIndex + 1]++
-          tempOb.stats.monthly.currentStreak++
-          tempOb.stats.monthly.lostInARow = 0
-          tempOb.stats.monthly.hasPlayed = true
-          tempOb.stats.monthly.isOnStreak = true
-          tempOb.stats.monthly.maxStreak = tempOb.stats.monthly.currentStreak > tempOb.stats.monthly.maxStreak ? tempOb.stats.monthly.currentStreak : tempOb.stats.monthly.maxStreak
-          tempOb.stats.monthly.winPercentage = parseInt((tempOb.stats.monthly.gamesWon / tempOb.stats.monthly.gamesPlayed) * 100)
-          let sum2 = 0
-          let counter2 = 0
-          for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < tempOb.stats.monthly.guesses[i]; j++) {
-              sum2 += i
-              counter2++
-            }
-          }
-          tempOb.stats.monthly.averageGuesses = parseInt(sum / counter)
-
         } else if (currGuess.num != year && tempOb.game.currentRowIndex == 2) {
           tempOb.game.status = "LOST"
           tempOb.stats.gamesPlayed++
