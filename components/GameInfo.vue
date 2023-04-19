@@ -2,6 +2,7 @@
     <div class="container">
         <div class="game-info">
             <p>{{ date }} | TOT #{{ num }}</p>
+            <a href="/archive">See Pictures Archive</a>
         </div>
     </div>
 </template>
@@ -104,5 +105,6 @@ export default {
 .game-info p {
     
     font-family: 'Tilt Warp', cursive;
+    margin-bottom: 10px;
 }
 </style>
