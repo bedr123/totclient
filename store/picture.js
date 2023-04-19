@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const state = () => ({
     picture: null,
-    pictures: null
+    pictures: null,
+    archive: null
 })
 
 const getters = {
@@ -11,6 +12,9 @@ const getters = {
     },
     pictures(state) {
         return state.pictures
+    },
+    archive(state) {
+        return state.archive
     }
 }
 
@@ -24,6 +28,9 @@ const mutations = {
             picture.is_current = picture.is_current == 1 ? true : false
             return picture
         })
+    },
+    SET_ARCHIVE(state, data) {
+        state.archive = data
     }
 }
 
@@ -63,7 +70,6 @@ const actions = {
         })
     },
     async getPicture(_, id) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`
         return axios.get("/api/pictures/" + id)
         // .then(() => {
         //     //return res.data
@@ -88,6 +94,14 @@ const actions = {
         }).catch((e) => {
             console.log(e)
         })
+    },
+    async getArchive(state, page) {
+        try {
+            const res = await axios.get("/api/archive?page=" + page)
+            state.commit("SET_ARCHIVE", res.data)
+        } catch(e) {
+            console.log(e)
+        }
     }
 }
 

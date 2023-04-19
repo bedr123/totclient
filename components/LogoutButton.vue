@@ -16,15 +16,15 @@ export default {
 
 <style scoped>
 .btn {
-  width: 100%;
-  padding: 0.75rem;
+  width: 50%;
+  padding: 0.5rem;
   border: none;
   border-radius: 4px;
-  margin: 0.313rem 0;
+  margin: 0.313rem auto;
   opacity: 0.9;
   display: flex;
   justify-content: center;
-  font-size: 1.063rem;
+  font-size: .9rem;
   line-height: 1.25rem;
   text-decoration: none; /* remove underline from anchors */
   cursor: pointer;

@@ -8,10 +8,6 @@
                 <FacebookButton @facebookLogin="facebookLogin" />
                 <GoogleButton @googleLogin="googleLogin" />
             </div>
-            <div class="login" v-else>
-                <LogoutButton @logout="logout" />
-                <!-- <button @click="logout">Logout</button> -->
-            </div>
             <div class="overall-stats">
                 <div class="title">
                     <h3>Overall Statistics</h3>
@@ -36,24 +32,24 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="lower-stats">
+                <div class="lower-stats">
                     <h3>Guess Distribution</h3>
                     <div class="guess-distribution">
                         <div class="guess">
-                            <div class="row">1</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[1] > 0 ? 'full' : 'empty' : stats ? stats.overall.guesses[1] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[1] : stats ? stats.overall.guesses[1] : 0 }}</div>
+                            <div class="row">1</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[1] > 0 ? 'full' : 'empty' : stats ? stats.guesses[1] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[1] : stats ? stats.guesses[1] : 0 }}</div>
                         </div>
                         <div class="guess">
-                            <div class="row">2</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[2] > 0 ? 'full' : 'empty' : stats ? stats.overall.guesses[2] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[2] : stats ? stats.overall.guesses[2] : 0 }}</div>
+                            <div class="row">2</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[2] > 0 ? 'full' : 'empty' : stats ? stats.guesses[2] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[2] : stats ? stats.guesses[2] : 0 }}</div>
                         </div>
                         <div class="guess">
-                            <div class="row">3</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[3] > 0 ? 'full' : 'empty' : stats ? stats.overall.guesses[3] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[3] : stats ? stats.overall.guesses[3] : 0 }}</div>
+                            <div class="row">3</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution[3] > 0 ? 'full' : 'empty' : stats ? stats.guesses[3] > 0 ? 'full' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution[3] : stats ? stats.guesses[3] : 0 }}</div>
                         </div>
                         <div class="guess">
-                            <div class="row">X</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution.fail > 0 ? 'fail' : 'empty' : stats ? stats.overall.guesses.fail > 0 ? 'fail' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution.fail : stats ? stats.overall.guesses.fail : 0 }}</div>
+                            <div class="row">X</div><div :class="`dist ${ (isAuthenticated) ? authStats.overall_guess_ditribution.fail > 0 ? 'fail' : 'empty' : stats ? stats.guesses.fail > 0 ? 'fail' : 'empty' : 'empty' }`">{{ (isAuthenticated) ? authStats.overall_guess_ditribution.fail : stats ? stats.guesses.fail : 0 }}</div>
                         </div>
                     </div>
-                </div> -->
-                <!-- <button @click="shareOverallStats" class="share">Share Overall Stats <img src="@/assets/images/share-fill.svg" /></button> -->
+                </div>
+                <button @click="shareOverallStats" class="share">Share Overall Stats <img src="@/assets/images/share-fill.svg" /></button>
             </div>
             <div class="leaderboard">
                 <h3>Leaderboard</h3>
@@ -96,12 +92,12 @@
                     <td>{{ player.name.length > 18 ? player.name.substr(0, 18) + '...' : player.name }}</td>
                     <td>Streak of {{ player.statistics.overall_current_streak }}</td>
                   </tr>
-                  <!-- <tr>
-                    <td>2nd</td>
-                    <td>Maria Anders</td>
-                    <td>Streak of 5</td>
+                  <tr class="leader">
+                    <td>&#129351;</td>
+                    <td>{{ leader ? leader.name : '' }}</td>
+                    <td>Streak of {{ leader ? leader.statistics.overall_max_streak : 0 }}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                     <td>3rd</td>
                     <td>Maria Anders</td>
                     <td>Streak of 4</td>
@@ -168,6 +164,10 @@
                 <button @click="shareCrowns" class="share">Share Crowns <img src="@/assets/images/share-fill.svg" /></button>
 
             </div>
+            <div class="logout" v-if="isAuthenticated">
+                <LogoutButton @logout="logout" />
+                <!-- <button @click="logout">Logout</button> -->
+            </div>
         </div>
     </div>
 </template>
@@ -196,6 +196,9 @@ export default {
     leaderboard() {
         return this.$store.getters.leaderboard
     },
+    leader() {
+        return this.$store.getters.leader
+    },
     wonThreeInARow() {
         return (this.isAuthenticated) ? this.authStats.overall_current_streak > 2 ? true : false : this.stats ? this.stats.currentStreak > 2 ? true : false : false
     },
@@ -214,6 +217,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getLeaderboard')
+    this.$store.dispatch('getLeader')
   },
   methods: {
     // shareOverallStats() {
@@ -530,6 +534,12 @@ export default {
     margin-bottom: 30px;
 }
 
+.logout {
+    margin-top: 30px;
+    text-align: center;
+    padding: 0.625rem;
+}
+
 table tr {
     display: table-row !important;
     border-bottom-width: 0px !important;
@@ -555,6 +565,10 @@ table tr td {
 
 .leaderboard {
     margin-bottom: 30px;
+}
+
+.leader {
+    border-left: #FFD700 4px solid;
 }
 
 .crowns h3, .leaderboard h3 {

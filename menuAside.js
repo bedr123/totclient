@@ -24,6 +24,11 @@ import {
       to: "/admin/pictures",
       label: "Pictures",
       icon: mdiPostageStamp,
+    },
+    {
+      to: "/admin/users",
+      label: "Users",
+      icon: mdiAccountCircle,
     }
   ];
   

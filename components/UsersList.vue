@@ -2,7 +2,6 @@
 import { computed, ref } from "vue";
 import { store } from "@/plugins/vuex";
 import { mdiPencilBoxOutline, mdiTrashCan } from "@mdi/js";
-import { useRoute } from 'vue-router'
 
 defineProps({
   checkable: Boolean
@@ -10,11 +9,9 @@ defineProps({
 
 const items = computed(() => store.state.main.clients);
 
-const pictures = computed(() => store.state.picture.pictures);
+const users = computed(() => store.state.main.users);
 
 const isActive = computed((isCurrent) => isCurrent == 1 ? true : false)
-
-const route = useRoute()
 
 // const editPicture = async (id) => {
 //   await navigateTo("/admin/pictures/" + id + "/edit")
@@ -34,7 +31,7 @@ const isModalDangerActive = ref(false);
 
 const perPage = ref(5);
 
-const currentPage = ref(route.query.page ? parseInt(route.query.page) : 1);
+const currentPage = ref(0);
 
 const checkedRows = ref([]);
 
@@ -45,14 +42,14 @@ const itemsPaginated = computed(() =>
   )
 );
 
-const numPages = computed(() => pictures.value ? Math.ceil(pictures.value.total / pictures.value.per_page) : 0);
+const numPages = computed(() => Math.ceil(items.value.length / perPage.value));
 
 const currentPageHuman = computed(() => currentPage.value + 1);
 
 const pagesList = computed(() => {
   const pagesList = [];
 
-  for (let i = 1; i <= numPages.value; i++) {
+  for (let i = 0; i < numPages.value; i++) {
     pagesList.push(i);
   }
 
@@ -118,15 +115,14 @@ const checked = (isChecked, client) => {
       <tr>
         <th v-if="checkable" />
         <th />
-        <th>Id</th>
-        <th>Picture</th>
-        <th>Year</th>
-        <th>Active</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Username</th>
         <th />
       </tr>
     </thead>
     <tbody>
-      <tr v-if="pictures" v-for="picture in pictures.data" :key="picture.id">
+      <tr v-if="users" v-for="user in users" :key="user.id">
         <TableCheckboxCell
           v-if="checkable"
           @checked="checked($event, client)"
@@ -137,25 +133,14 @@ const checked = (isChecked, client) => {
             class="w-24 h-24 mx-auto lg:w-6 lg:h-6"
           /> -->
         </td>
-        <td data-label="Id">
-          {{ picture.id }}
-        </td>
         <td data-label="Picture">
-          <img class="w-28" :src="picture.image" alt="">
+          {{ user.name }}
         </td>
         <td data-label="Year">
-          {{ picture.year }}
+          {{ user.email }}
         </td>
         <td data-label="Active">
-          <FormField>
-            <FormCheckRadioGroup
-              @change="activate(picture.id)"
-              v-model="picture.is_current"
-              name="sample-switch"
-              type="switch"
-              :options="{ one: 'One'}"
-            />
-          </FormField>
+          {{ user.username }}
         </td>
         <!-- <td data-label="Progress" class="lg:w-32">
           <progress
@@ -173,22 +158,6 @@ const checked = (isChecked, client) => {
             >{{ client.created }}</small
           >
         </td> -->
-        <td class="before:hidden lg:w-1 whitespace-nowrap">
-          <BaseButtons type="justify-start lg:justify-end" no-wrap>
-            <BaseButton
-              color="info"
-              :icon="mdiPencilBoxOutline"
-              small
-              :to="`/admin/pictures/edit/${picture.id}`"
-            />
-            <BaseButton
-              color="danger"
-              :icon="mdiTrashCan"
-              small
-              @click="deletePicture(picture.id)"
-            />
-          </BaseButtons>
-        </td>
       </tr>
     </tbody>
   </table>
@@ -199,13 +168,13 @@ const checked = (isChecked, client) => {
           v-for="page in pagesList"
           :key="page"
           :active="page === currentPage"
-          :label="page"
+          :label="page + 1"
           :color="page === currentPage ? 'lightDark' : 'whiteDark'"
           small
-          @click="$emit('changePage', page)"
+          @click="currentPage = page"
         />
       </BaseButtons>
-      <small>Page {{ currentPage }} of {{ numPages }}</small>
+      <small>Page {{ currentPageHuman }} of {{ numPages }}</small>
     </BaseLevel>
   </div>
 </template>

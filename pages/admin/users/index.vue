@@ -12,12 +12,10 @@ definePageMeta({
 })
 
 export default {
-  name: 'picturesPage',
+  name: 'usersPage',
   data() {
     return {
-      pictures: {
-        data: null
-      },
+      users: [],
     mdiMonitorCellphone,
     mdiTableBorder,
     mdiTableOff,
@@ -25,14 +23,10 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("getAllPictures").then(() => {
-      this.pictures = this.$store.getters.pictures
+    this.$store.dispatch("getUsers").then(() => {
+      this.users = this.$store.getters.users
+      console.log(this.users)
     })
-  },
-  methods: {
-    changePage(page) {
-      location.href = '/archive?page=' + page
-    }
   }
 }
 </script>
@@ -41,23 +35,14 @@ export default {
   <div>
       <NuxtLayout name="authenticated">
         <SectionMain>
-          <SectionTitleLineWithButton :icon="mdiPostageStamp" title="Pictures" main>
-            <BaseButton
-              to="/admin/pictures/create"
-              
-              :icon="mdiPlusThick"
-              label="Add New"
-              color="info"
-              rounded-full
-              small
-            />
+          <SectionTitleLineWithButton :icon="mdiPostageStamp" title="Users" main>
           </SectionTitleLineWithButton>
           <!-- <NotificationBar color="info" :icon="mdiMonitorCellphone">
             <b>Responsive table.</b> Collapses on mobile
           </NotificationBar> -->
     
           <CardBox class="mb-6" has-table>
-            <TableSampleClients @changePage="(page) => changePage(page)" :pictures="pictures" />
+            <UsersList :users="users" />
           </CardBox>
         </SectionMain>
       </NuxtLayout>

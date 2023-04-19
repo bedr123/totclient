@@ -9,6 +9,8 @@ const state = () => ({
     token: null,
     user: null,
     leaderboard: null,
+    users: null,
+    leader: null,
 
     /* Field focus with ctrl+k (to register only once) */
     isFieldFocusRegistered: false,
@@ -43,8 +45,14 @@ const mutations = {
     }
     Cookie.set('user', JSON.stringify(data))
   },
+  SET_USERS(state, data) {
+    state.users = data
+  },
   SET_LEADERBOARD(state, data) {
     state.leaderboard = data
+  },
+  SET_LEADER(state, data) {
+    state.leader = data
   }
 }
 const actions = {
@@ -114,6 +122,15 @@ const actions = {
       console.log(e)
     })
   },
+  async getUsers(state) {
+    try {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("token")}`
+      const res = await axios.get("/api/users")
+      state.commit("SET_USERS", res.data)
+    } catch(e) {
+      console.log(e)
+    }
+  },
   updateStatistics(state, data) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${Cookie.get("token")}`
     axios.put("/api/statistics/update", data).then((res) => {
@@ -153,6 +170,15 @@ const actions = {
     }).catch((e) => {
       console.log(e)
     })
+  },
+  getLeader(state) {
+    axios.get("/api/leader").then((res) => {
+      state.commit("SET_LEADER", res.data.user);
+      console.log(res.data.user)
+      return
+    }).catch((e) => {
+      console.log(e)
+    })
   }
 }
 
@@ -168,6 +194,12 @@ const getters = {
   },
   leaderboard(state) {
     return state.leaderboard ? state.leaderboard : null
+  },
+  users(state) {
+    return state.users ? state.users : null
+  },
+  leader(state) {
+    return state.leader ? state.leader : null
   }
 }
 
