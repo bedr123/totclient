@@ -220,35 +220,35 @@ export default {
     this.$store.dispatch('getLeader')
   },
   methods: {
-    // shareOverallStats() {
-    //     let stats = null
-    //     if (this.$store.getters.user) {
-    //         stats = this.$store.getters.user.statistics
-    //     } else {
-    //         stats = JSON.parse(localStorage.getItem('testoftimes')).stats.overall
-    //     }
+    shareOverallStats() {
+        let stats = null
+        if (this.$store.getters.user) {
+            stats = this.$store.getters.user.statistics
+        } else {
+            stats = JSON.parse(localStorage.getItem('testoftimes')).stats.overall
+        }
 
-    //     let newline = "\n"
-    //     let text = null
-    //     if (this.$store.getters.user) {
-    //         text = `Overall Stats ${ newline }Games Played: ${ stats.overall_played } ${ newline }Win Percentage: ${ stats.overall_win_percentage } ${ newline }Current Streak: ${ stats.overall_current_streak } ${ newline }Max Streak: ${ stats.overall_max_streak } ${ newline }`
-    //     } else {
-    //         text = `Overall Stats ${ newline }Games Played: ${ stats.gamesPlayed } ${ newline }Win Percentage: ${ stats.winPercentage } ${ newline }Current Streak: ${ stats.currentStreak } ${ newline }Max Streak: ${ stats.maxStreak } ${ newline }`
-    //     }
-    //     if (navigator.share) {
-    //         navigator.share({
-    //             title: 'Test Of Times',
-    //             text: text,
-    //             url: 'https://testoftimes.com'
-    //         })
-    //     } else {
-    //         navigator.clipboard.writeText(text)
-    //         this.$emit("showError", "Copied to clipboard")
-    //         setTimeout(() => {
-    //           this.$emit("hideError")
-    //         }, 2000)
-    //     }
-    // },
+        let newline = "\n"
+        let text = null
+        if (this.$store.getters.user) {
+            text = `Overall Stats ${ newline }Games Played: ${ stats.overall_played } ${ newline }Win Percentage: ${ stats.overall_win_percentage } ${ newline }Current Streak: ${ stats.overall_current_streak } ${ newline }Max Streak: ${ stats.overall_max_streak } ${ newline }`
+        } else {
+            text = `Overall Stats ${ newline }Games Played: ${ stats.gamesPlayed } ${ newline }Win Percentage: ${ stats.winPercentage } ${ newline }Current Streak: ${ stats.currentStreak } ${ newline }Max Streak: ${ stats.maxStreak } ${ newline }`
+        }
+        if (navigator.share) {
+            navigator.share({
+                title: 'Test Of Times',
+                text: text,
+                url: 'https://testoftimes.com'
+            })
+        } else {
+            navigator.clipboard.writeText(text)
+            this.$emit("showError", "Copied to clipboard")
+            setTimeout(() => {
+              this.$emit("hideError")
+            }, 2000)
+        }
+    },
     // shareMonthlyStats() {
     //     let stats = null
     //     if (this.$store.getters.user) {
@@ -373,6 +373,9 @@ export default {
 </script>
 
 <style scoped>
+h1, h2, h3, p, td, div {
+    font-family: 'Tilt Warp', cursive;
+}
 .overlay {
     position: fixed;
     top: 0;
@@ -385,6 +388,7 @@ export default {
 }
 
 .modal {
+    font-family: 'Tilt Warp', cursive;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -414,11 +418,13 @@ export default {
 }
 
 .title {
+    font-family: 'Tilt Warp', cursive;
     text-align: center;
     margin: 0 auto;
     margin-bottom: 10px;
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 .upper-stats {
@@ -427,6 +433,7 @@ export default {
 }
 
 .stats h3, .stats p {
+    font-family: 'Tilt Warp', cursive;
     text-align: center !important;
 }
 
@@ -576,6 +583,7 @@ table tr td {
     margin-bottom: 10px;
     font-size: 1rem;
     font-weight: bold;
+    text-decoration: underline;
 }
 
 .my-crowns {

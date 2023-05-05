@@ -29,6 +29,7 @@
     "nuxi": "^3.2.0",
     "universal-cookie": "^4.0.4",
     "vue-analytics": "^5.22.1",
+    "vue-confetti": "^2.3.0",
     "vue3-facebook-login": "^0.0.1",
     "vue3-google-login": "^2.0.14",
     "vuex": "^4.0.2"

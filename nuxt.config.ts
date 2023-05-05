@@ -1,6 +1,9 @@
 // import { defineNuxtConfig } from "nuxt";
 
 export default defineNuxtConfig({
+  plugins: [
+    { src: '~/plugins/vue-confetti.js', mode: 'client' },
+  ],
   css: ["~/assets/css/main.css"],
   postcss: {
     plugins: {

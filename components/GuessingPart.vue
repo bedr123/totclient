@@ -73,6 +73,14 @@ export default {
           setTimeout(() => {
             this.endTheGame()
             this.$store.commit("guessed")
+            this.$confetti.start({
+          defaultColors: [
+            'green'
+          ],
+        });
+            setTimeout(() => {
+              this.$confetti.stop();
+            }, 3000)
           }, 4 * 600 + 1000)
         } else {
             if (this.$store.state.guess.currGuesses == 3) {

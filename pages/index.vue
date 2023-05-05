@@ -198,3 +198,13 @@ export default {
   }
 }
 </script>
+
+<style>
+.confetti{
+   max-width: 640px;
+   display: block;
+   margin: 0 auto;
+   border: 1px solid #ddd;
+   user-select: none;
+}
+</style>
